@@ -1,7 +1,7 @@
-from flask import Flask
+from flask import Flask, render_template
 import requests as rq
 import pandas
-
+import json
 app = Flask(__name__)
 
 
@@ -16,7 +16,9 @@ def detail_data(country):
     data_res = res_value.json()
     data_df = pandas.DataFrame.from_dict(data_res[country])
     json_data = data_df.to_json(orient='records')
-    return json_data
+    json_object = json.loads(json_data)
+    return render_template('Index.html', len=len(json_object), items=json_object)
+    #return json_data
 
 
 if __name__ == '__main__':

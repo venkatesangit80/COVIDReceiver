@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>COVID Status</title>
+</head>
+<style type="text/css">
+
+    th:tr{
+        color: blue;
+
+    }
+    tr:nth-of-type(2n){
+        border: 1px solid black;
+        background-color: rgba(150, 150, 150, 0.5);
+
+    }
+
+    td{
+        padding: 8px 8px;
+        border: 1px solid black;
+    }
+</style>
+<body>
+    <table><thead><td>Date</td><td>CountOfAffected</td><td>CountOfDead</td><td>CountOfRecovered</td></thead>
+        <tbody>
+        {%for i in range(0, len)%}
+            <tr>
+                <td>{{ items[i].date }}</td>
+                <td>{{ items[i].confirmed }}</td>
+                <td>{{ items[i].deaths }}</td>
+                <td>{{ items[i].recovered }}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+    </table>
+</body>
+</html>
