@@ -15,7 +15,6 @@ def detail_data(country):
     res_value = rq.get(covid_data_url, verify=False)
     data_res = res_value.json()
     data_df = pandas.DataFrame.from_dict(data_res[country])
-    print(data_df.head(3))
     json_data = data_df.to_json(orient='records')
     return json_data
 
