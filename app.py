@@ -15,6 +15,7 @@ def detail_data(country):
     res_value = rq.get(covid_data_url, verify=False)
     data_res = res_value.json()
     data_df = pandas.DataFrame.from_dict(data_res[country])
+    data_df = data_df.sort_values(by='date', ascending=False)
     json_data = data_df.to_json(orient='records')
     json_object = json.loads(json_data)
     return render_template('Index.html', len=len(json_object), items=json_object)
