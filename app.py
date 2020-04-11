@@ -23,7 +23,7 @@ def detail_data(country):
         json_object = json.loads(json_data)
         return render_template('Index.html', len=len(json_object), items=json_object)
     else:
-        return "Look into Country typo"
+        return "Countries you can search for " + get_all_countries()
 
 
 @app.route('/Graph/<country>')
@@ -48,8 +48,16 @@ def graph_data(country):
         values = [10, 9, 8, 7, 6, 4, 7, 8]
         return render_template('Graph.html', values=confirmed, labels=label_values)
     else:
-        return "Look into Country typo"
+        return "Countries you can search for " + get_all_countries()
 
+def get_all_countries():
+    covid_data_url = "https://pomber.github.io/covid19/timeseries.json"
+    res_value = rq.get(covid_data_url, verify=False)
+    data_res = res_value.json()
+    lst_coutries = []
+    for single_key in data_res.keys():
+        lst_coutries.append(single_key)
+    return " ".join(lst_coutries)
 
 if __name__ == '__main__':
     app.run()
