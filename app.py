@@ -28,14 +28,16 @@ def detail_data(country):
 
 @app.route('/Graph/<country>')
 def graph_data(country):
-    #labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August']
     covid_data_url = "https://pomber.github.io/covid19/timeseries.json"
     res_value = rq.get(covid_data_url, verify=False)
     data_res = res_value.json()
     if country in data_res:
         data_df = pandas.DataFrame.from_dict(data_res[country])
+        confirmed_df = data_df['confirmed']
+        data_df['Previous_Day_Diff'] = confirmed_df.diff()
+        data_df['Previous_Day_Diff'] = data_df['Previous_Day_Diff'].fillna(0)
         label_values= data_df['date'].tolist()
-        confirmed = data_df['confirmed'].tolist()
+        confirmed = data_df['Previous_Day_Diff'].tolist()
         labels = []
         labels.append('January')
         labels.append('February')
@@ -50,14 +52,16 @@ def graph_data(country):
     else:
         return "Countries you can search for " + get_all_countries()
 
+
 def get_all_countries():
     covid_data_url = "https://pomber.github.io/covid19/timeseries.json"
     res_value = rq.get(covid_data_url, verify=False)
     data_res = res_value.json()
-    lst_coutries = []
+    lst_country = []
     for single_key in data_res.keys():
-        lst_coutries.append(single_key)
-    return " ".join(lst_coutries)
+        lst_country.append(single_key)
+    return ",".join(lst_country)
+
 
 if __name__ == '__main__':
     app.run()
