@@ -1,3 +1,29 @@
+# Run the monitoring script every 5 minutes  
+# */5 * * * * python /path/to/system_log_monitor.py 
+"""
+The SQLite database contains three tables to organize the monitoring data:
+	•	real_time_monitoring – Server resource usage per server. Fields include:
+	•	timestamp – Date/Time of the log entry
+	•	server – Server identifier (one of 50 servers)
+	•	cpu_usage – CPU utilization (percentage)
+	•	memory_usage – Memory utilization (percentage)
+	•	disk_usage – Disk utilization (percentage)
+	•	network_usage – Network traffic (e.g. MB/s or similar unit)
+	•	application_error_logs – Application error events. Fields include:
+	•	timestamp – Date/Time of the error event
+	•	application – Application name (one of 5 applications)
+	•	server – Server where the error occurred
+	•	error_type – Type/category of error (e.g. DatabaseError, TimeoutError)
+	•	message – Error message or description
+	•	telemetry_metrics – High-level system/app metrics for health monitoring. Fields include:
+	•	timestamp – Date/Time of the metric sample
+	•	application – Application name associated with the metric
+	•	server – Server from which the metric is reported
+	•	response_time – Response time (e.g. request handling time in milliseconds)
+	•	latency – Network or processing latency in milliseconds
+	•	failure_rate – Failure rate (e.g. fraction or percentage of failed requests)
+"""
+
 import sqlite3
 import os
 import random
