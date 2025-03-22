@@ -1,3 +1,15 @@
+"""
+How it works: Each time run_once() is called, it will connect to the database, create the tables if needed, 
+insert five new random incident records, possibly link two of them as parent/child, and then archive+delete any incidents older than 5 hours. 
+You can schedule this function to run every 5 minutes (using cron or a similar scheduler). Over time, the incident_tickets table will only 
+contain recent incidents (last 5 hours), while older ones accumulate in historical_incidents. The incident_dependencies table maintains 
+relationships among active tickets (any relations involving an incident are cleaned up once that incident ages out and is removed from the 
+main table).
+
+Save this script as a .py file and ensure it has execute permissions if needed. You can then set up a cron job (for example, using */5 * * * * python /path/to/incident_manager.py) to run it every 5 minutes.
+"""
+
+
 import sqlite3
 import random
 from datetime import datetime, timedelta
