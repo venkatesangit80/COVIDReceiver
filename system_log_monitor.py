@@ -1,3 +1,7 @@
+"""
+Usage: Save this script to a file (e.g., system_log_monitor.py) on your server. Set up a cron job to run it every 5 minutes (as shown above) to continuously insert new log data and purge old records. You can adjust the frequency or retention period as needed.
+"""
+
 # Run the monitoring script every 5 minutes  
 # */5 * * * * python /path/to/system_log_monitor.py 
 """
